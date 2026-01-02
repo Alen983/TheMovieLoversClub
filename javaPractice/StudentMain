@@ -1,0 +1,92 @@
+
+import java.util.*;
+
+//custom Exception
+class NomarksException extends Exception {
+    public NomarksException(String message) {
+        super(message);
+    }
+}
+
+class Person {  
+     //instance variables
+
+    int id;
+    String name;
+
+    //constructor to initialize
+    public Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    void displayInfo() {
+        System.out.printf("%d %s", id, name);
+    }
+}
+
+class Student extends Person {
+
+    ArrayList<Integer> marks = new ArrayList<Integer>();
+
+    //constructor
+    public Student(int id, String name) {
+        super(id, name);
+        this.marks = new ArrayList<>();
+    }
+
+    //method
+    double calculateAverage() {
+        double result = 0, sum = 0;
+        try {
+            if (marks.isEmpty()) {
+                throw new NomarksException("Marks is empty!");
+            }
+            for (Integer i : marks) {
+                sum += i;
+            }
+            result = sum / marks.size();
+            return result;
+
+        } catch (NomarksException e) {
+            System.out.println("Caught Exception" + e.getMessage());
+
+        }
+        return 0;
+    }
+
+    //@Override
+    void displayInfo() {
+        System.out.printf("id = %d\n", id);
+        System.out.printf("name = %s\n", name); // String
+        System.out.printf("marks = %s\n", marks.toString()); // ArrayList
+        System.out.printf("average_marks = %.2f\n", calculateAverage()); // float/double
+
+    }
+}
+
+class Main {
+
+    public static void main(String[] args) {
+        Scanner marko = new Scanner(System.in);
+
+        int idd1 = marko.nextInt();
+        String names1 = marko.next();
+        Student s1 = new Student(idd1, names1);
+        int n1 = marko.nextInt();
+        for (int i = 0; i < n1; i++) {
+            s1.marks.add(marko.nextInt());
+        }
+        int idd2 = marko.nextInt();
+        String names2 = marko.next();
+        Student s2 = new Student(idd2, names2);
+        int n2 = marko.nextInt();
+        for (int i = 0; i < n2; i++) {
+            s2.marks.add(marko.nextInt());
+        }
+        s1.displayInfo();
+        s2.displayInfo();
+
+
+    }
+}
